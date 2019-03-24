@@ -92,7 +92,7 @@ void Create_CoRated_table(map<string, set<string> >& dst, map<string, map<string
 	map<string, set<string> >::iterator iter_End = dst.end();
 	for (; iter_begin != iter_End; iter_begin++)
 	{
-		//连续遍历两次商品表
+		//连续遍历两次商品表,
 		set<string>& user_set = iter_begin->second;
 		set<string>::iterator set_begin1 = user_set.begin();
 		for (; set_begin1 != user_set.end(); set_begin1++)
