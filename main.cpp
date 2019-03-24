@@ -15,8 +15,8 @@ string C[] = { "c","d" };
 string D[] = { "b","c","d" };
 string E[] = {"a","d"};
 
-map<string, set<string>> user_to_item;
-map<string, set<string>> item_to_user;
+map<string, set<string> > user_to_item;
+map<string, set<string> > item_to_user;
 
 //生成 用户-物品的对应表
 void Create_UserToItem_Table()
@@ -65,7 +65,7 @@ void TransferTo_ItemToUser()
 		item_to_user.clear();
 	}
 
-	map<string, set<string>>::iterator iter = user_to_item.begin();
+	map<string, set<string> >::iterator iter = user_to_item.begin();
 	while (iter != user_to_item.end())
 	{
 		set<string>& item_set = iter->second;
@@ -85,11 +85,11 @@ void Prepare()
 }
 
 // 根据倒排表建立稀疏矩阵
-void Create_CoRated_table(map<string, set<string>>& dst, map<string, map<string, float>>& CoRated_table)
+void Create_CoRated_table(map<string, set<string> >& dst, map<string, map<string, float> >& CoRated_table)
 {
 	//遍历所有用户
-	map<string, set<string>>::iterator iter_begin = dst.begin();
-	map<string, set<string>>::iterator iter_End = dst.end();
+	map<string, set<string> >::iterator iter_begin = dst.begin();
+	map<string, set<string> >::iterator iter_End = dst.end();
 	for (; iter_begin != iter_End; iter_begin++)
 	{
 		//连续遍历两次商品表
@@ -108,7 +108,7 @@ void Create_CoRated_table(map<string, set<string>>& dst, map<string, map<string,
 					continue;
 				}
 				bool init = false;
-				map<string, map<string, float>>::iterator aim1 = CoRated_table.find(user1);
+				map<string, map<string, float> >::iterator aim1 = CoRated_table.find(user1);
 				if (aim1 != CoRated_table.end())
 				{
 					map<string, float>& temp = aim1->second;
@@ -133,9 +133,9 @@ void Create_CoRated_table(map<string, set<string>>& dst, map<string, map<string,
 }
 
 //计算物品与物品间的相似度  两物品受众的交集/两物品受众的乘机开根号
-void Calculate_Similarity(const map<string, map<string, float>>& CoRated_table, map<string, set<string>>& item_to_user, map<string, map<string, float>>& result)
+void Calculate_Similarity(const map<string, map<string, float> >& CoRated_table, map<string, set<string> >& item_to_user, map<string, map<string, float> >& result)
 {
-	map<string, map<string, float>>::const_iterator iter_corated1 = CoRated_table.begin();
+	map<string, map<string, float> >::const_iterator iter_corated1 = CoRated_table.begin();
 	for (; iter_corated1 != CoRated_table.end(); iter_corated1++)
 	{
 		const string& user1 = iter_corated1->first;
@@ -160,9 +160,9 @@ void Calculate_Similarity(const map<string, map<string, float>>& CoRated_table, 
 	}
 }
 
-void PrintResult(const map<string, map<string, float>>& result)
+void PrintResult(const map<string, map<string, float> >& result)
 {
-	map<string, map<string, float>>::const_iterator iter = result.begin();
+	map<string, map<string, float> >::const_iterator iter = result.begin();
 	for (; iter != result.end(); iter++)
 	{
 		const string user1 = iter->first;
@@ -176,7 +176,7 @@ void PrintResult(const map<string, map<string, float>>& result)
 }
 
 // 指定一个用户和一个商品还有该用户的历史感兴趣物品，倒排与指定商品相似的历史感兴趣物品的相似度
-vector<float> SortSimilarUser(const map<string, map<string, float>>& table, const string& user_name, const string& item_name, map<string, set<string>>& user_to_item)
+vector<float> SortSimilarUser(const map<string, map<string, float> >& table, const string& user_name, const string& item_name, map<string, set<string> >& user_to_item)
 {
 	vector<float> v;
 
@@ -227,11 +227,11 @@ int main()
 	Prepare();
 
 	//建立稀疏矩阵
-	map<string, map<string, float>> CoRated_table;
+	map<string, map<string, float> > CoRated_table;
 	Create_CoRated_table(user_to_item, CoRated_table);
 
 	//计算物品之间的相似度
-	map<string, map<string, float>> similarity;
+	map<string, map<string, float> > similarity;
 	Calculate_Similarity(CoRated_table,item_to_user, similarity);
 
 	PrintResult(similarity);
