@@ -108,7 +108,7 @@ void Create_CoRated_table(map<string, set<string> >& dst, map<string, map<string
 					continue;
 				}
 				bool init = false;
-				map<string, map<string, float> >::iterator aim1 = CoRated_table.find(user1);
+				map<string, map<string, float>  >::iterator aim1 = CoRated_table.find(user1);
 				if (aim1 != CoRated_table.end())
 				{
 					map<string, float>& temp = aim1->second;
