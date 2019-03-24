@@ -134,6 +134,7 @@ void Create_CoRated_table(map<string, set<string> >& dst, map<string, map<string
 
 
 //计算物品与物品间的相似度  两物品受众的交集/两物品受众的乘积结果开根号
+//123
 void Calculate_Similarity(const map<string, map<string, float> >& CoRated_table, map<string, set<string> >& item_to_user, map<string, map<string, float> >& result)
 {
 	map<string, map<string, float> >::const_iterator iter_corated1 = CoRated_table.begin();
